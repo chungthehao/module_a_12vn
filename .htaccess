@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# file yêu cầu (trên URL) ko tồn tại? nếu tt thì vô file
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# folder yêu cầu Ko tồn tại? nếu có tồn tại thì vô folder
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# nếu file/folder yêu cầu đều ko tồn tại thì mới làm rule này
+RewriteRule ^(.*)$ index.php?url=$1
