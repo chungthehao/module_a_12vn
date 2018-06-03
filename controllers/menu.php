@@ -8,18 +8,26 @@
 			require 'models/menu.php';
 			require 'models/category.php';
 
+			/*
+			 * Xác định xem chạy action nào (4): index, showDetail, rate, writeRSS
+			 * - http://localhost/module_a_12vn/menu(/index)
+			 * - http://localhost/module_a_12vn/menu/plate-of-scottish-smoked-salmon
+			 * - submit form (post) có input ẩn name:action, value:rate
+			 * - http://localhost/module_a_12vn/menu/feed/
+			 */
 			$action = isset($_POST['action']) ? $_POST['action'] : '';
 			if($action == ''){ // Mới chạy lần đầu
-				if($param != NULL && $param[0] != 'index'){
-					if($param[0] == 'feed'){
-						$this->writeRSS();
-					}else{
-						$this->showDetail($param[0]);
-					}
-				}else{
+				if(empty($param) || $param[0] == 'index'){
+					// echo '<pre>';
+					// print_r($param);
+					// echo '</pre>'; die();
 					$this->index();
 				}
-			}elseif ($action == 'rate') {
+				if($param[0] == 'feed'){
+					$this->writeRSS();
+				}
+				$this->showDetail($param[0]);
+			}elseif ($action == 'rate') { // Khi ngta đánh giá món ăn
 				$this->rate();
 			}
 		}
@@ -35,7 +43,7 @@
 
 				$theNumberOfRatings = 0;// Tổng số LƯỢT đánh giá của cate này (+ từng menu lại)
 				$AverageRatings = 0; // ĐIỂM đánh giá tb của cate (tb của từng điểm tb menu)
-				$theNumberOfMenu = 0; // Đếm số menu trong cate này
+				$theNumberOfMenu = 0; // Đếm số món ăn trong cate này
 				$TotalMenuAverageRatings = 0;
 				foreach($menuListByCate as $menu){
 					$theNumberOfRatings += $menu['rate']; // số lượt đánh của riêng menu này
@@ -45,6 +53,8 @@
 					$theNumberOfMenu++;
 				}
 				$AverageRatings = round($TotalMenuAverageRatings/$theNumberOfMenu, 1);
+
+				// Cho kết quả vào $cateList, chuẩn bị truyền ra view
 				$cateList[$k]['rate'] = $theNumberOfRatings;
 				if($theNumberOfRatings > 1){
 					$cateList[$k]['more'] = 's';
@@ -64,6 +74,9 @@
 			$this->_view->render('menu/index');
 		} // hết index method
 
+		/*
+		 * Chi tiết món ăn
+		 */
 		public function showDetail($alias){
 			$menuModel = new MenuModel();
 			$menu = $menuModel->getMenuByAlias($alias);
@@ -118,6 +131,7 @@
 				if( ! isset($_SESSION['voted'])){
 					$_SESSION['voted'] = array();
 				}
+				// Món nào đánh giá rồi thì ko cho đánh giá nữa
 				array_push($_SESSION['voted'], $menuId);
 				$this->_view->flag = "1"; // rate thành công 
 			}else{

@@ -3,7 +3,7 @@
 
 	// Tạo hình từ 1 hình rỗng có sẵn loại gif
 	// $captcha = imagecreatefromgif('emptycaptcha.gif');
-	// 
+	 
 	// Tự tạo 1 ảnh rộng 60, cao 25
 	$captcha = imagecreate(60, 25);
 

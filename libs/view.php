@@ -3,6 +3,7 @@
 	 * class View
 	 * 1 class để phục vụ cho việc xuất giao diện,
 	 * chẳng hạn như render file nào đó... trong action
+	 * Ngoài ra, còn dùng để truyền tham số từ controller qua bên view
 	 */
 	class View{
 		// Hàm dựng

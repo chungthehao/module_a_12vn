@@ -17,6 +17,7 @@
 
 		// Phương thức kết nối với CSDL
 		public function connect(){
+			// từ khóa global để dùng các biến bên ngoài ở đây đc
 			global $server;
 			global $hostUser;
 			global $hostPass;

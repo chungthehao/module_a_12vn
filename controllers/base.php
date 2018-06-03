@@ -18,6 +18,9 @@ class BaseController{
 		$this->load();
 	}
 
+	/*
+	 * Method này xác định 2 thuộc tính: $_controller, $_param
+	 */
 	private function parseURL(){ 			
 		// $_GET['url'] = 'menu/plate-of-scottish-smoked-salmon'
 		// Xem file .htaccess để hiểu rõ dòng dưới
@@ -55,6 +58,10 @@ class BaseController{
 		}
 	}
 
+	/*
+	 * Method load(): load controller và chạy action tương ứng
+	 * note: nếu tham số bậy bạ, ko tồn tại controller thì chạy HomeController
+	 */
 	private function load(){
 		// menu ---> MenuController
 		$className = ucfirst($this->_controller).'Controller';

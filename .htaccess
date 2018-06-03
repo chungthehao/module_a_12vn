@@ -7,4 +7,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
 # nếu file/folder yêu cầu đều ko tồn tại thì mới làm rule này
-RewriteRule ^(.*)$ index.php?url=$1
+RewriteRule ^(.*)$ /module_a_12vn/index.php?url=$1

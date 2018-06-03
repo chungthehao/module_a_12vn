@@ -1,7 +1,16 @@
 <?php
+/*
+ * HomeController: chạy khi
+ * - Mới vào trang web
+ * - Ko tồn tại controller từ URL ng dùng gõ vào
+ */
 	class HomeController extends Controller{
 		public function __construct($param = NULL){
 			parent::__construct();
+			/*
+			 * Xác định xem chạy action nào
+			 * note: cẩn thận thôi, thực ra controller này mới có 1 action
+			 */
 			if( ! empty($param)){
 				$actionName = $param[0];
 				if(method_exists($this, $actionName)){
